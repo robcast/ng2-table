@@ -47,6 +47,19 @@ export class NgTable {
         this._columns.push(value);
       }
     });
+    if (this._columns.length > values.length) {
+      // columns have been removed
+      this._columns = [];
+      values.forEach((value) => {
+        let column = this._columns.find((col) => col.name === value.name);
+        if (column) {
+          Object.assign(column, value);
+        }
+        if (!column) {
+          this._columns.push(value);
+        }
+      });
+    }
   }
 
   public get columns() {
