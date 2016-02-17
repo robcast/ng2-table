@@ -38,28 +38,7 @@ export class NgTable {
   public tableChanged:EventEmitter<any> = new EventEmitter();
 
   public set columns(values:Array<any>) {
-    values.forEach((value) => {
-      let column = this._columns.find((col) => col.name === value.name);
-      if (column) {
-        Object.assign(column, value);
-      }
-      if (!column) {
-        this._columns.push(value);
-      }
-    });
-    if (this._columns.length > values.length) {
-      // columns have been removed
-      this._columns = [];
-      values.forEach((value) => {
-        let column = this._columns.find((col) => col.name === value.name);
-        if (column) {
-          Object.assign(column, value);
-        }
-        if (!column) {
-          this._columns.push(value);
-        }
-      });
-    }
+    this._columns = values;
   }
 
   public get columns() {
@@ -78,8 +57,18 @@ export class NgTable {
     return {columns: sortColumns};
   }
 
+  public changeColumn(value:any) {
+    let column = this._columns.find((col) => col.name === value.name);
+    if (column) {
+      Object.assign(column, value);
+    }
+    if (!column) {
+      this._columns.push(value);
+    }
+  }
+
   onChangeTable(column:any) {
-    this.columns = [column];
+    this.changeColumn(column);
     this.tableChanged.emit({sorting: this.configColumns});
   }
 }
