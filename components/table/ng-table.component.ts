@@ -71,6 +71,14 @@ export class NgTableComponent {
         this._columns.push(value);
       }
     });
+    if (this._columns.length > values.length) {
+        // less columns in new set - remove orphaned columns
+        let columns = this._columns.filter((col) => {
+            let column = values.find((val) => val.name === col.name);
+            return (column != null);
+        });
+        this._columns = columns;
+    }
   }
 
   private _columns:Array<any> = [];
