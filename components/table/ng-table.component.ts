@@ -73,9 +73,9 @@ export class NgTableComponent {
     });
     if (this._columns.length > values.length) {
         // less columns in new set - remove orphaned columns
-        let columns = this._columns.filter((col) => {
-            let column = values.find((val) => val.name === col.name);
-            return (column != null);
+        let columns: Array<any> = this._columns.filter((col: any) => {
+            let column: any = values.find((val: any) => val.name === col.name);
+            return (column !== undefined);
         });
         this._columns = columns;
     }
